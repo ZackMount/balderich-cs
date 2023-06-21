@@ -45,7 +45,7 @@ namespace Balderich.Models.User
         /// <summary>
         /// 用户注册时间时间戳
         /// </summary>
-        [JsonProperty("RegisterDate")]
+        [JsonProperty("register_date")]
         public long Register_Date { get; set; }
         /// <summary>
         /// 用户最后登录时间时间戳
@@ -80,7 +80,7 @@ namespace Balderich.Models.User
         /// <summary>
         /// 用户是否为VIP用户
         /// </summary>
-        [JsonProperty("is_Vip")]
+        [JsonProperty("is_vip")]
         public bool IsVip { get; set; }
     }
 }
