@@ -2,7 +2,7 @@
 using Balderich.Models.User;
 using Balderich.Utils;
 using Newtonsoft.Json;
-
+using Newtonsoft.Json.Linq;
 
 namespace Balderich.Api
 {
@@ -29,6 +29,19 @@ namespace Balderich.Api
         {
             var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/statistics/active/");
             return new StatisticsActive(JsonConvert.DeserializeObject<StatisticsActiveInput>(apiMessageResult?.Data.ToString()));
+        }
+        /// <summary>
+        /// 获取用户解题曲线
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="uid">用户UID。相同的路径数据缓存60分钟。</param>
+        /// <returns>分类返回用户解题时间时间戳数据。</returns>
+        public static async Task<StatisticsSolves?> GetUserStatisticsSolvesAsync(Session session, int uid)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/statistics/solves/");
+            var jobj = new JObject();
+            jobj["data"] = apiMessageResult.Data;
+            return JsonConvert.DeserializeObject<StatisticsSolves>(jobj.ToString());
         }
         /// <summary>
         /// 获取用户能力雷达图数据
