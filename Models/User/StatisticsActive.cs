@@ -8,16 +8,20 @@ namespace Balderich.Models
     {
         [JsonProperty("start_date")]
         public long StartDate { get; set; }
-
         [JsonProperty("ends_date")]
         public long EndsDate { get; set; }
-
         [JsonProperty("count")]
         public List<List<object>> Count { get; set; }
     }
     public class SolveData
     {
+        /// <summary>
+        /// 日期字符串
+        /// </summary>
         public string Date { get; set; }
+        /// <summary>
+        /// 解题数量
+        /// </summary>
         public int Count { get; set; }
     }
 
@@ -27,12 +31,10 @@ namespace Balderich.Models
         /// 开始时间时间戳
         /// </summary>
         public long StartDate { get; set; }
-
         /// <summary>
         /// 结束时间时间戳
         /// </summary>
         public long EndsDate { get; set; }
-
         /// <summary>
         /// 解题数据列表，其中每一项都为[日期字符串, 解题数量]的列表
         /// </summary>

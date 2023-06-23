@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Balderich.Models
 {
-    public class ChallengeType
+    /// <summary>
+    /// 题解数据
+    /// </summary>
+    public class StatisticsSolves
     {
         /// <summary>
         /// 题目类型
@@ -22,13 +25,10 @@ namespace Balderich.Models
         public List<int> Time { get; set; }
     }
 
-    public class StatisticsSolves
+    public class StatisticsSolvesRoot
     {
-        /// <summary>
-        /// 题解数据
-        /// </summary>
         [JsonProperty("data")]
-        public List<ChallengeType> Solves { get; set; }
+        public List<StatisticsSolves>? Solves { get; set; }
     }
 
 }
