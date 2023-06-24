@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Contest\" />
-    <Folder Include="Models\Problem\" />
     <Folder Include="Models\Team\" />
   </ItemGroup>
 

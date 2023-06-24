@@ -2,6 +2,9 @@
 using Balderich.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Mime;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Balderich.Api
 {
@@ -157,15 +160,45 @@ namespace Balderich.Api
             }
         }
         /// <summary>
-        /// 上传图片到图床
+        /// 图床下载图片
         /// </summary>
         /// <param name="session">会话</param>
         /// <param name="pid">图片ID</param>
-        /// <returns>上传成功返回图片信息，否则返回null。</returns>
-        public static async void DownloadPicture(Session session, int pid)
+        /// <param name="savePath">图片保存路径，文件名从响应头中读取</param>
+        /// <returns>成功返回true，失败抛出异常</returns>
+        public static async Task<bool> DownloadPicture(Session session, int pid, string savePath)
         {
-            var apiMessageResult = await Request.PostAsync(session, $"user/picturebed/{pid}/download/", null);
-            Console.WriteLine(apiMessageResult?.Data);
+            var path = $"user/picturebed/{pid}/download/";
+            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
+            var signature = Signature.Calculator(signatureClass);
+            var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.PostAsync(postUrl, null).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.Content.Headers.Contains("Content-Disposition"))
+                {
+                    string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
+                    var match = new Regex("filename=\"(.*)\"").Match(contentDisposition);
+                    if (match.Success)
+                    {
+                        string FileName = match.Groups[1].Value;
+                        string filePath = Path.Combine(savePath, FileName);
+                        byte[] imageData = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                        File.WriteAllBytes(filePath, imageData);
+                        return true;
+                    }
+                    throw new Exception("Content-Disposition does not contain a 'filename' attribute.");
+                }
+                else
+                {
+                    throw new Exception("Response does not contain a 'Content-Disposition' header.");
+                }
+            }
+            else
+            {
+                throw new Exception($"POST Failure. Statue Code：{response.StatusCode}, Reason：{response.ReasonPhrase}");
+            }
         }
     }
 }
