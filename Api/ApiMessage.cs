@@ -1,10 +1,7 @@
-﻿using Balderich.Models;
-using Balderich.Models.User;
+﻿using Balderich.Models.User;
 using Balderich.Utils;
-using balderich_cs.Models.User;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Drawing;
 
 namespace Balderich.Api
 {
@@ -14,7 +11,7 @@ namespace Balderich.Api
         /// 获取用户个人信息
         /// </summary>
         /// <param name="session">会话</param>
-        /// <param name="name">用户名或用户UID。相同的路径数据缓存10分钟。</param>
+        /// <param name="name">用户名或用户UID</param>
         /// <returns>用户个人信息字段</returns>
         public static async Task<Info?> GetUserInfoAsync(Session session, string name)
         {
@@ -25,7 +22,7 @@ namespace Balderich.Api
         /// 获取用户解题活跃数据
         /// </summary>
         /// <param name="session">会话</param>
-        /// <param name="uid">用户UID。相同的路径数据缓存60分钟。</param>
+        /// <param name="uid">用户UID</param>
         /// <returns>从当年1月1日至当天的每日解题数据。</returns>
         public static async Task<StatisticsActive?> GetUserStatisticsActiveAsync(Session session, int uid)
         {
@@ -36,7 +33,7 @@ namespace Balderich.Api
         /// 获取用户解题曲线
         /// </summary>
         /// <param name="session">会话</param>
-        /// <param name="uid">用户UID。相同的路径数据缓存60分钟。</param>
+        /// <param name="uid">用户UID</param>
         /// <returns>分类返回用户解题时间时间戳数据。</returns>
         public static async Task<List<StatisticsSolves>?> GetUserStatisticsSolvesAsync(Session session, int uid)
         {
@@ -51,7 +48,7 @@ namespace Balderich.Api
         /// 获取用户积分曲线
         /// </summary>
         /// <param name="session">会话</param>
-        /// <param name="uid">用户UID。相同的路径数据缓存60分钟。</param>
+        /// <param name="uid">用户UID</param>
         /// <returns>返回用户参加的每场比赛排名以及积分变动数据。</returns>
         public static async Task<List<StatisticsRating>?> GetUserStatisticsRatingAsync(Session session, int uid)
         {
@@ -65,7 +62,7 @@ namespace Balderich.Api
         /// 获取用户能力雷达图数据
         /// </summary>
         /// <param name="session">会话</param>
-        /// <param name="uid">用户UID。相同的路径数据缓存60分钟。</param>
+        /// <param name="uid">用户UID</param>
         /// <returns>返回一个列表，包含用户各方向解题数据，其中一共六项，分别代表WEB、PWN、REVERSE、CRYPTO、MISC、OTHER方向解题数据，每项数据都为[解题数, 总题数]的列表</returns>
         public static async Task<StatisticsRadar?> GetUserStatisticsRadarAsync(Session session, int uid)
         {
@@ -118,6 +115,57 @@ namespace Balderich.Api
             jobj["data"] = apiMessageResult.Data;
             var result = JsonConvert.DeserializeObject<FollowerList>(jobj.ToString());
             return result?.Followers;
+        }
+        /// <summary>
+        /// 获取图床使用情况
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <returns>返回图床使用情况。</returns>
+        public static async Task<PictureBedUsed> GetUserPictureBedUsed(Session session)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/picturebed/used/");
+            return JsonConvert.DeserializeObject<PictureBedUsed>(apiMessageResult?.Data.ToString());
+        }
+        /// <summary>
+        /// 获取图床列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回指定页的图床列表数据，数据按照id排降序。</returns>
+        public static async Task<List<Picture>?> GetUserPictureBedList(Session session, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/picturebed/list/{page}/{size}/");
+            var result = JsonConvert.DeserializeObject<PictureBedList>(apiMessageResult?.Data.ToString());
+            return result?.Picture;
+        }
+        /// <summary>
+        /// 图床上传图片
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="imagePath">图片路径</param>
+        /// <returns>上传成功返回图片信息，否则返回null。</returns>
+        public static async Task<PictureBedUploadResponse?> UploadToPictureBed(Session session, string imagePath)
+        {
+            byte[] imageData = File.ReadAllBytes(imagePath);
+            string fileName = Path.GetFileName(imagePath);
+            using (var content = new MultipartFormDataContent())
+            {
+                content.Add(new ByteArrayContent(imageData), "image", fileName);
+                var apiMessageResult = await Request.PostAsync(session, "user/picturebed/upload/", content);
+                return JsonConvert.DeserializeObject<PictureBedUploadResponse>(apiMessageResult?.Data.ToString());
+            }
+        }
+        /// <summary>
+        /// 上传图片到图床
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="pid">图片ID</param>
+        /// <returns>上传成功返回图片信息，否则返回null。</returns>
+        public static async void DownloadPicture(Session session, int pid)
+        {
+            var apiMessageResult = await Request.PostAsync(session, $"user/picturebed/{pid}/download/", null);
+            Console.WriteLine(apiMessageResult?.Data);
         }
     }
 }

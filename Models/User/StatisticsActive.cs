@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Balderich.Models
+namespace Balderich.Models.User
 {
     public class StatisticsActiveInput
     {

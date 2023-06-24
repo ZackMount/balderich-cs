@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Balderich.Models
+namespace Balderich.Models.User
 {
     /// <summary>
     /// 每场比赛排名以及积分变动数据

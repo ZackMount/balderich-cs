@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Balderich.Models
+namespace Balderich.Models.User
 {
     /// <summary>
     /// 题解数据

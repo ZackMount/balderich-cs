@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace Balderich.Models
+namespace Balderich.Models.User
 {
+    /// <summary>
+    /// 文章信息
+    /// </summary>
     public class Article
     {
         /// <summary>
@@ -26,6 +28,9 @@ namespace Balderich.Models
         [JsonProperty("type")]
         public int? Type { get; set; }
     }
+    /// <summary>
+    /// 文章列表
+    /// </summary>
     public class ArticleList
     {
         /// <summary>

@@ -10,27 +10,38 @@ namespace Balderich.Utils
 {
     public class Request
     {
-        /// <summary>
-        /// GET请求
-        /// </summary>
-        /// <param name="session"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
         public static async Task<ApiMessageResult> GetAsync(Session session, string path)
         {
             var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var getUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
             var content = await HttpGetAsync(getUrl);
-
-            var result = Parse(content);
             try
             {
+                var result = Parse(content);
                 AssertSuccess((RetCode)result.Code);
                 return result;
             }
             catch (ArgumentException ex)
                  {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
+        }
+        public static async Task<ApiMessageResult> PostAsync(Session session, string path, HttpContent? content)
+        {
+            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
+            var signature = Signature.Calculator(signatureClass);
+            var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
+            var apiMessageResult = await HttpPostAsync(postUrl, content);
+            try
+            {
+                var result = Parse(apiMessageResult);
+                AssertSuccess((RetCode)result.Code);
+                return result;
+            }
+            catch (ArgumentException ex)
+            {
                 Console.WriteLine(ex.Message);
                 throw ex;
             }
@@ -46,19 +57,38 @@ namespace Balderich.Utils
                 throw new ArgumentOutOfRangeException(nameof(code), code, "The code is not success.");
             }
         }
-        private static async Task<string> HttpGetAsync(string url)
+        private static async Task<string?> HttpGetAsync(string url, int timeout = 10)
         {
             using var client = new HttpClient();
-            string content = await client.GetStringAsync(url);
-            return content;
-        }
-        private static async Task<string> HttpPostAsync(string url, string data)
-        {
-            using var client = new HttpClient();
-            using var content = new StringContent(data, Encoding.UTF8);
-            var response = await client.PostAsync(url, content);
-            string result = await response.Content.ReadAsStringAsync();
+            client.Timeout = TimeSpan.FromSeconds(timeout);
+            var content = await client.GetAsync(url);
+            var result = content.Content.ReadAsStream().ToString();
             return result;
+        }
+        public static async Task<string?> HttpPostAsync(string url, HttpContent? content)
+        {
+            try
+            {
+                string responseContent = "";
+                HttpClient client = new HttpClient();
+
+                HttpResponseMessage response = await client.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    responseContent = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    throw new Exception($"POST Failure. Statue Code：{response.StatusCode}, Reason：{response.ReasonPhrase}");
+                }
+
+                return responseContent;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private static ApiMessageResult? Parse(string content)
         {

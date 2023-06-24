@@ -1,4 +1,4 @@
-﻿namespace Balderich.Models
+﻿namespace Balderich.Models.User
 {
     public class StatisticsRadar
     {

@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace balderich_cs.Models.User
+namespace Balderich.Models.User
 {
+    /// <summary>
+    /// 粉丝用户数据
+    /// </summary>
     public class Follower
     {
         /// <summary>
@@ -30,11 +28,13 @@ namespace balderich_cs.Models.User
         [JsonProperty("avatar")]
         public string? Avatar { get; set; }
     }
-
+    /// <summary>
+    /// 粉丝列表
+    /// </summary>
     public class FollowerList
     {
         /// <summary>
-        /// 粉丝列表
+        /// 粉丝信息
         /// </summary>
         [JsonProperty("data")]
         public List<Follower>? Followers { get; set; }
