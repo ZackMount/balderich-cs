@@ -16,3 +16,11 @@ obj/Debug/net7.0/balderich-cs.AssemblyInfoInputs.cache
 obj/Debug/net7.0/balderich-cs.GeneratedMSBuildEditorConfig.editorconfig
 obj/project.nuget.cache
 obj/project.assets.json
+*.json
+*.dll
+*.exe
+*.pdb
+*.BuildWithSkipAnalyzers
+*.CopyComplete
+*.cache
+obj/Debug/net7.0/balderich-cs.csproj.FileListAbsolute.txt

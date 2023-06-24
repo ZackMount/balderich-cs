@@ -1,8 +1,10 @@
 ﻿using Balderich.Models;
 using Balderich.Models.User;
 using Balderich.Utils;
+using balderich_cs.Models.User;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 namespace Balderich.Api
 {
@@ -43,6 +45,7 @@ namespace Balderich.Api
             jobj["data"] = apiMessageResult.Data;
             var result = JsonConvert.DeserializeObject<StatisticsSolvesRoot>(jobj.ToString());
             return result?.Solves;
+            
         }
         /// <summary>
         /// 获取用户积分曲线
@@ -70,6 +73,51 @@ namespace Balderich.Api
             StatisticsRadar statisticsRadar = new();
             statisticsRadar.RadarData = apiMessageResult.Data.ToObject<List<List<int>>>();
             return statisticsRadar;
+        }
+        /// <summary>
+        /// 获取用户文章列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="uid">用户UID</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回指定页的文章数据和文章总数，文章数据按照文章ID排降序。</returns>
+        public static async Task<ArticleList?> GetUserArticleListAsync(Session session, int uid, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/article/list/{page}/{size}/");
+            return JsonConvert.DeserializeObject<ArticleList>(apiMessageResult?.Data.ToString());
+        }
+        /// <summary>
+        /// 获取用户关注列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="uid">用户UID</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回指定页的关注列表数据，数据按照关注时间排降序。</returns>
+        public static async Task<List<Following>?> GetUserFollowingListAsync(Session session, int uid, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/following/list/{page}/{size}/");
+            var jobj = new JObject();
+            jobj["data"] = apiMessageResult.Data;
+            var result = JsonConvert.DeserializeObject<FollowingList>(jobj.ToString());
+            return result?.Followings;
+        }
+        /// <summary>
+        /// 获取用户粉丝列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="uid">用户UID</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回指定页的粉丝列表数据，数据按照关注时间排降序。</returns>
+        public static async Task<List<Follower>?> GetUserFollowerListAsync(Session session, int uid, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/follower/list/{page}/{size}/");
+            var jobj = new JObject();
+            jobj["data"] = apiMessageResult.Data;
+            var result = JsonConvert.DeserializeObject<FollowerList>(jobj.ToString());
+            return result?.Followers;
         }
     }
 }

@@ -11,14 +11,14 @@ namespace Balderich.Models
         [JsonProperty("ends_date")]
         public long EndsDate { get; set; }
         [JsonProperty("count")]
-        public List<List<object>> Count { get; set; }
+        public List<List<object>>? Count { get; set; }
     }
     public class SolveData
     {
         /// <summary>
         /// 日期字符串
         /// </summary>
-        public string Date { get; set; }
+        public string? Date { get; set; }
         /// <summary>
         /// 解题数量
         /// </summary>

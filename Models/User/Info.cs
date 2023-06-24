@@ -16,12 +16,12 @@ namespace Balderich.Models.User
         /// 用户UID
         /// </summary>
         [JsonProperty("bio")]
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
         /// <summary>
         /// 用户简介
         /// </summary>
         [JsonProperty("intro")]
-        public string Intro { get; set; }
+        public string? Intro { get; set; }
         /// <summary>
         /// 用户解题数量
         /// </summary>
@@ -36,12 +36,12 @@ namespace Balderich.Models.User
         /// 用户头像路径，如果未上传则为空字符串
         /// </summary>
         [JsonProperty("avatar")]
-        public string Avatar { get; set; }
+        public string? Avatar { get; set; }
         /// <summary>
         /// 用户背景图路径，如果未上传则为空字符串
         /// </summary>
         [JsonProperty("cover")]
-        public string Cover { get; set; }
+        public string? Cover { get; set; }
         /// <summary>
         /// 用户注册时间时间戳
         /// </summary>
@@ -56,7 +56,7 @@ namespace Balderich.Models.User
         /// 用户邮箱，如果设置未公开则为空字符串
         /// </summary>
         [JsonProperty("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         /// <summary>
         /// 用户粉丝数量
         /// </summary>
@@ -76,7 +76,7 @@ namespace Balderich.Models.User
         /// 用户战队名，如果未加入战队则为空字符串
         /// </summary>
         [JsonProperty("team")]
-        public string Team { get; set; }
+        public string? Team { get; set; }
         /// <summary>
         /// 用户是否为VIP用户
         /// </summary>
