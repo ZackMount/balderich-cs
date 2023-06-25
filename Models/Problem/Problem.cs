@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Balderich.Models.Problem;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +8,6 @@ using System.Threading.Tasks;
 
 namespace Balderich.Models.Problem
 {
-    /// <summary>
-    /// 上传者
-    /// </summary>
-    public class Author
-    {
-        /// <summary>
-        /// 上传者UID
-        /// </summary>
-        [JsonProperty("uid")]
-        public int Uid { get; set; }
-        /// <summary>
-        /// 上传者用户名
-        /// </summary>
-        [JsonProperty("name")]
-        public string? Name { get; set; }
-        /// <summary>
-        /// 上传者Rating
-        /// </summary>
-        [JsonProperty("rating")]
-        public int Rating { get; set; }
-    }
     /// <summary>
     /// 题目信息
     /// </summary>
@@ -64,18 +44,4 @@ namespace Balderich.Models.Problem
         [JsonProperty("level")]
         public double Level { get; set; }
     }
-    public class ProblemList
-    {
-        /// <summary>
-        /// 题目列表
-        /// </summary>
-        [JsonProperty("problems")]
-        public List<Problem>? Problems { get; set; }
-        /// <summary>
-        /// 题目总数
-        /// </summary>
-        [JsonProperty("total")]
-        public int Total { get; set; }
-    }
-
 }
