@@ -1,11 +1,16 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Balderich.Models.User
 {
-    public class PictureBedUploadResponse
+    public class Picture
     {
         /// <summary>
-        /// 图片编号    
+        /// 图片编号
         /// </summary>
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -28,6 +33,6 @@ namespace Balderich.Models.User
         /// 图片路径
         /// </summary>
         [JsonProperty("url")]
-        public string? Url { get; set; }
+        public string Url { get; set; }
     }
 }

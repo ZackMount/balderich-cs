@@ -46,7 +46,7 @@ namespace Balderich.Models.User
         /// 用户注册时间时间戳
         /// </summary>
         [JsonProperty("register_date")]
-        public long Register_Date { get; set; }
+        public long RegisterDate { get; set; }
         /// <summary>
         /// 用户最后登录时间时间戳
         /// </summary>

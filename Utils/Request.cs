@@ -15,7 +15,7 @@ namespace Balderich.Utils
             var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var getUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
-            var content = HttpGet(getUrl);
+            var content = await HttpGetAsync(getUrl);
             try
             {
                 var result = Parse(content);
@@ -33,7 +33,7 @@ namespace Balderich.Utils
             var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
-            var apiMessageResult = HttpPost(postUrl, content);
+            var apiMessageResult = await HttpPostAsync(postUrl, content);
             try
             {
                 var result = Parse(apiMessageResult);
@@ -56,49 +56,6 @@ namespace Balderich.Utils
             {
                 throw new Exception(Enum.GetName(code));
             }
-        }
-        public static string HttpGet(string url)
-        {
-            try
-            {
-                string content = "";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Timeout = 60000;
-                WebResponse response = request.GetResponse();
-                using (Stream stream = response.GetResponseStream())
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        content = reader.ReadToEnd();
-                        reader.Close();
-                        reader.Dispose();
-                    }
-                    stream.Close();
-                    stream.Dispose();
-                }
-                response.Close();
-                response.Dispose();
-                return content;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static string HttpPost(string url, HttpContent? content)
-        {
-            string responseContent = "";
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
-            {
-                responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                throw new Exception($"POST Failure. Statue Code：{response.StatusCode}, Reason：{response.ReasonPhrase}");
-            }
-            return responseContent;
         }
         private static async Task<string?> HttpGetAsync(string url, int timeout = 10)
         {

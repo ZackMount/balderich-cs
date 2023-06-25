@@ -1,19 +1,19 @@
 ﻿using Newtonsoft.Json;
 
-namespace Balderich.Models.User
+namespace Balderich.Models.Contest
 {
     /// <summary>
-    /// 图床列表数据
+    /// 比赛列表
     /// </summary>
-    public class PictureBedList
+    public class List
     {
         /// <summary>
-        /// 图片信息
+        /// 比赛列表
         /// </summary>
-        [JsonProperty("pictures")]
-        public List<Picture> Pictures { get; set; }
+        [JsonProperty("contests")]
+        public List<Info> Contests { get; set; }
         /// <summary>
-        /// 图片数量总数
+        /// 比赛总数
         /// </summary>
         [JsonProperty("total")]
         public int Total { get; set; }

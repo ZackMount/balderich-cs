@@ -21,7 +21,7 @@ namespace Balderich.Models.Problem
         ///	题目描述
         /// </summary>
         [JsonProperty("desc")] 
-        public string? Desc { get; set; }
+        public string? Description { get; set; }
         /// <summary>
         /// 分数
         /// </summary>
@@ -30,13 +30,13 @@ namespace Balderich.Models.Problem
         /// <summary>
         /// 标签
         /// </summary>
-        [JsonProperty("Tags")] 
-        public List<string>? tags { get; set; }
+        [JsonProperty("tags")] 
+        public List<string>? Tags { get; set; }
         /// <summary>
         /// 是否有提示
         /// </summary>
-        [JsonProperty("Hint")] 
-        public bool hint { get; set; }
+        [JsonProperty("hint")] 
+        public bool Hint { get; set; }
         /// <summary>
         /// 评分
         /// </summary>
@@ -77,21 +77,5 @@ namespace Balderich.Models.Problem
         /// </summary>
         [JsonProperty("author")]
         public Author? Author { get; set; }
-    }
-    /// <summary>
-    /// 解题信息
-    /// </summary>
-    public class SovledInfo
-    {
-        /// <summary>
-        /// 解决人数
-        /// </summary>
-        [JsonProperty("solved")]
-        public int Solved { get; set; }
-        /// <summary>
-        /// 错误次数
-        /// </summary>
-        [JsonProperty("wa")]
-        public int Wa { get; set; }
     }
 }

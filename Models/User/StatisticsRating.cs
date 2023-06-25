@@ -12,7 +12,6 @@ namespace Balderich.Models.User
         /// </summary>
         [JsonProperty("date")]
         public long Date { get; set; }
-
         /// <summary>
         /// 比赛后新的Rating
         /// </summary>
@@ -44,5 +43,4 @@ namespace Balderich.Models.User
         [JsonProperty("data")]
         public List<StatisticsRating>? Ratings { get; set; }
     }
-
 }

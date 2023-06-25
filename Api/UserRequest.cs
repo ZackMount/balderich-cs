@@ -95,7 +95,7 @@ namespace Balderich.Api
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回指定页的关注列表数据，数据按照关注时间排降序。</returns>
-        public static async Task<List<Following>?> GetFollowingListAsync(Session session, int uid, int page, int size)
+        public static async Task<List<Followe>?> GetFollowingListAsync(Session session, int uid, int page, int size)
         {
             var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/following/list/{page}/{size}/");
             var jobj = new JObject();
@@ -111,7 +111,7 @@ namespace Balderich.Api
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回指定页的粉丝列表数据，数据按照关注时间排降序。</returns>
-        public static async Task<List<Follower>?> GetFollowerListAsync(Session session, int uid, int page, int size)
+        public static async Task<List<Followe>?> GetFollowerListAsync(Session session, int uid, int page, int size)
         {
             var apiMessageResult = await Request.GetAsync(session, $"user/{uid}/follower/list/{page}/{size}/");
             var jobj = new JObject();

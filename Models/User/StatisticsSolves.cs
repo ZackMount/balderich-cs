@@ -22,7 +22,7 @@ namespace Balderich.Models.User
         /// 全部解题时间戳
         /// </summary>
         [JsonProperty("data")]
-        public List<int> Time { get; set; }
+        public List<long>? Time { get; set; }
     }
 
     public class StatisticsSolvesRoot
