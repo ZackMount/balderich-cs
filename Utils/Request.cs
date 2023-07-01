@@ -12,39 +12,23 @@ namespace Balderich.Utils
     {
         public static async Task<ApiMessageResult> GetAsync(Session session, string path)
         {
-            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
+            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(session.DateTime), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var getUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
             var content = await HttpGetAsync(getUrl);
-            try
-            {
-                var result = Parse(content);
-                AssertSuccess((RetCode)result.Code);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw ex;
-            }
+            var result = Parse(content);
+            AssertSuccess((RetCode)result.Code);
+            return result;
         }
         public static async Task<ApiMessageResult> PostAsync(Session session, string path, HttpContent? content)
         {
-            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
+            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(session.DateTime), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
             var apiMessageResult = await HttpPostAsync(postUrl, content);
-            try
-            {
-                var result = Parse(apiMessageResult);
-                AssertSuccess((RetCode)result.Code);
-                return result;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw ex;
-            }
+            var result = Parse(apiMessageResult);
+            AssertSuccess((RetCode)result.Code);
+            return result;
         }
         private static void AssertSuccess(RetCode code)
         {
