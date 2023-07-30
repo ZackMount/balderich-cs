@@ -13,7 +13,7 @@ namespace Balderich.Models.User
         [JsonProperty("uid")]
         public int Uid { get; set; }
         /// <summary>
-        /// 用户UID
+        /// 用户个性签名
         /// </summary>
         [JsonProperty("bio")]
         public string? Bio { get; set; }

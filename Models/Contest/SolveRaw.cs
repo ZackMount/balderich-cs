@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Balderich.Models.Contest
 {
     /// <summary>
-    /// 解题信息
+    /// 原始解题信息
     /// </summary>
     public class SolveRaw
     {

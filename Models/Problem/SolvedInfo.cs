@@ -16,6 +16,6 @@ namespace Balderich.Models.Problem
         /// 错误次数
         /// </summary>
         [JsonProperty("wa")]
-        public int Wa { get; set; }
+        public int WA { get; set; }
     }
 }
