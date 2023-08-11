@@ -1,9 +1,8 @@
 ﻿using Balderich.Api;
+using Balderich.Models.User;
 using Balderich.Utils;
+using Newtonsoft.Json;
 
+Session session = new("your_key", "your_secret", DateTime.Now);
 
-Session session = new("1ff8125b2bf6c14a9cbd", "0f901a8581cef61960f35a559b6b69592dabbb35", DateTime.Now);
-int[] uids = { 3388 };
-Team.GetStatisticsDay(session);
-Problem.GetSheetProblemListAsync(session, 1, 1, 15);
-Contest.GetRankListAsync(session, 1, 10);
+var info = User.GetInfoAsync(session, "Xenny").Result; //user info here.
