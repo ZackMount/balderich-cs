@@ -166,39 +166,39 @@ namespace Balderich.Api
         /// <param name="pid">图片ID</param>
         /// <param name="savePath">图片保存路径，文件名从响应头中读取</param>
         /// <returns>成功返回true，失败抛出异常</returns>
-        public static bool DownloadPicture(Session session, int pid, string savePath)
+        public static async Task<bool> DownloadPictureAsync(Session session, int pid, string savePath)
         {
             var path = $"user/picturebed/{pid}/download/";
             var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
             var signature = Signature.Calculator(signatureClass);
             var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = client.PostAsync(postUrl, null).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
-            {
-                if (response.Content.Headers.Contains("Content-Disposition"))
-                {
-                    string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
-                    var match = new Regex("filename=\"(.*)\"").Match(contentDisposition);
-                    if (match.Success)
-                    {
-                        string FileName = match.Groups[1].Value;
-                        string filePath = Path.Combine(savePath, FileName);
-                        byte[] imageData = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-                        File.WriteAllBytes(filePath, imageData);
-                        return true;
-                    }
-                    throw new Exception("Content-Disposition does not contain a 'filename' attribute.");
-                }
-                else
-                {
-                    throw new Exception("Response does not contain a 'Content-Disposition' header.");
-                }
-            }
-            else
+
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.PostAsync(postUrl, null);
+
+            if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"POST Failure. Statue Code：{response.StatusCode}, Reason：{response.ReasonPhrase}");
             }
+
+            if (!response.Content.Headers.Contains("Content-Disposition"))
+            {
+                throw new Exception("Response does not contain a 'Content-Disposition' header.");
+            }
+
+            string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
+            var match = new Regex("filename=\"(.*)\"").Match(contentDisposition);
+            if (!match.Success)
+            {
+                throw new Exception("Content-Disposition does not contain a 'filename' attribute.");
+            }
+
+            string fileName = match.Groups[1].Value;
+            string filePath = Path.Combine(savePath, fileName);
+            byte[] imageData = await response.Content.ReadAsByteArrayAsync();
+
+            File.WriteAllBytes(filePath, imageData);
+            return true;
         }
     }
 }

@@ -31,15 +31,21 @@
 
   ```c#
   //用户模块:获取用户个人信息
-  var userinfo = User.GetInfoAsync(session, Xenny);
+  var userInfo = User.GetInfoAsync(session, "Xenny");
+  //题目模块:获取题单题目列表
+  var problemInfo = Problem.GetSheetProblemListAsync(session, 1, 1, 10);
+  //比赛模块:获取比赛排行榜数据
+  var contestRankList = Contest.GetRankListAsync(session, 1, 10);
+  //战队模块:获取战队申请列表
+  var teamApplyList = Team.GetUserApplyListAsync(session, 1, 10);
   ```
 
 ### 异常处理
 
-- 暂时没有统一做异常处理，统一抛异常处理，建议自己捕获处理（
+- 暂时没有统一做异常处理，统一抛直接异常码，建议自行捕获处理。
 
 
 
 ## 特别鸣谢
 
-#### Xenny
+Xenny

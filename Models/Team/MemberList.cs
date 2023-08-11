@@ -3,19 +3,19 @@
 namespace Balderich.Models.Team
 {
     /// <summary>
-    /// 比赛列表
+    /// 成员列表
     /// </summary>
-    public class ContestList
+    public class MemberList
     {
         /// <summary>
-        /// 比赛列表
+        /// 成员列表
         /// </summary>
-        [JsonProperty("contests")]
-        public List<Contest>? Contests { get; set; }
+        [JsonProperty("users")]
+        public List<Member>? Users { get; set; }
         /// <summary>
-        /// 比赛总数
+        /// 总用户数量
         /// </summary>
-        [JsonProperty("total")]
+        [JsonProperty("total")] 
         public int Total { get; set; }
     }
 }

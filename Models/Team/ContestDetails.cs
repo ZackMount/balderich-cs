@@ -2,6 +2,9 @@
 
 namespace Balderich.Models.Team
 {
+    /// <summary>
+    /// 比赛详细信息
+    /// </summary>
     public class ContestDetails
     {
         /// <summary>

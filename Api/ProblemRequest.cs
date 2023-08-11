@@ -57,6 +57,8 @@ namespace Balderich.Api
         /// </summary>
         /// <param name="session">会话</param>
         /// <param name="psid">题单ID</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
         /// <returns>题单题目列表</returns>
         public static async Task<List> GetSheetProblemListAsync(Session session, int psid, int page, int size)
         {

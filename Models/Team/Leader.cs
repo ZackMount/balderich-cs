@@ -5,7 +5,7 @@ namespace Balderich.Models.Team
     /// <summary>
     /// 队长信息
     /// </summary>
-    public class User
+    public class Leader
     {
         /// <summary>
         /// 队长UID

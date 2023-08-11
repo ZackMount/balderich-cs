@@ -16,7 +16,7 @@ namespace Balderich.Models.Team
         /// 题目标题
         /// </summary>
         [JsonProperty("title")] 
-        public string Title { get; set; }
+        public string? Title { get; set; }
         /// <summary>
         /// 标签
         /// </summary>

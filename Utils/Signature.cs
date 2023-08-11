@@ -12,7 +12,7 @@ namespace Balderich.Utils
         /// <returns></returns>
         public static string Calculator(SignatureClass signatureClass)
         {
-            return EncryptBySHA256($"{signatureClass.Path}#{signatureClass.Key}#{signatureClass.SignTime}#{signatureClass.Secret}");
+            return EncryptBySHA256($"/v2/api/{signatureClass.Path}#{signatureClass.Key}#{signatureClass.SignTime}#{signatureClass.Secret}");
         }
         /// <summary>
         /// SHA256加密

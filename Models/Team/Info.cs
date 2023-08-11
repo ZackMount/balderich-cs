@@ -36,7 +36,7 @@ namespace Balderich.Models.Team
         /// 队长信息
         /// </summary>
         [JsonProperty("user")] 
-        public User? User { get; set; }
+        public Leader? Leader { get; set; }
         /// <summary>
         ///	人员数量
         /// </summary>

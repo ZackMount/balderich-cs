@@ -1,6 +1,7 @@
 ﻿using Balderich.Models.Team;
 using Balderich.Utils;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Balderich.Api
 {
@@ -109,13 +110,47 @@ namespace Balderich.Api
         /// <returns>
         /// <br>cetegory为类型列表，包含题目类型字符串，“1”->"10"分别代表WEB->实战。</br>
         /// <br>point为分数字段，键为题目PID，值为题目当前分数。</br>
-        /// <br>problems为题目详细信息列表，每项元素都为一个包含三子元素的列表，分别为PID，解题数，题目名。</br>
+        /// <br>problems为题目详细信息列表，分别为PID，解题数，题目名。</br>
         /// <br>top3为前3血字典，键为题目PID，值为前三血用户UID字符串列表。</br>
         /// </returns>
         public static async Task<Models.Contest.RankList> GetContestRankListAsync(Session session, int cid, int page, int size)
         {
             var apiMessageResult = await Request.GetAsync(session, $"team/contest/{cid}/rank/list/{page}/{size}/");
             return new Models.Contest.RankList(JsonConvert.DeserializeObject<Models.Contest.RankListRaw>(apiMessageResult?.Data.ToString()));
+        }
+        /// <summary>
+        /// 获取战队成员列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回内容中role为用户角色，其中[0,1,2]分别代表[成员，管理员，队长]</returns>
+        public static async Task<MemberList>? GetUserListAsync(Session session, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"team/user/list/{page}/{size}/");
+            return JsonConvert.DeserializeObject<MemberList>(apiMessageResult?.Data.ToString());
+        }
+        /// <summary>
+        /// 获取战队申请列表
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <param name="page">页数</param>
+        /// <param name="size">每页大小</param>
+        /// <returns>返回战队申请列表</returns>
+        public static async Task<ApplyUserList>? GetUserApplyListAsync(Session session, int page, int size)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"team/user/apply/list/{page}/{size}/");
+            return JsonConvert.DeserializeObject<ApplyUserList>(apiMessageResult?.Data.ToString());
+        }
+        /// <summary>
+        /// 获取战队使用情况
+        /// </summary>
+        /// <param name="session">会话</param>
+        /// <returns>返回战队使用情况</returns>
+        public static async Task<AnalysisUse> GetAnalysisUse(Session session)
+        {
+            var apiMessageResult = await Request.GetAsync(session, $"team/analysis/use/");
+            return JsonConvert.DeserializeObject<AnalysisUse>(apiMessageResult?.Data.ToString());
         }
     }
 }
