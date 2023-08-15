@@ -17,7 +17,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取题目列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>题目列表</returns>
@@ -29,7 +28,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取题目详细信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="pid">题目ID</param>
         /// <returns>题目详细信息</returns>
         public async Task<Info?> GetInfoAsync(int pid)
@@ -40,7 +38,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取题单列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page"></param>
         /// <param name="size"></param>
         /// <returns>题单列表</returns>
@@ -52,7 +49,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取题单详细数据
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="psid">题单ID</param>
         /// <returns>题单详细数据</returns>
         public async Task<SheetInfo?> GetSheetInfoAsync(int psid)
@@ -63,7 +59,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取题单题目列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="psid">题单ID</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>

@@ -21,7 +21,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户个人信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="name">用户名或用户UID</param>
         /// <returns>用户个人信息字段</returns>
         public async Task<Info?> GetInfoAsync(string name)
@@ -32,7 +31,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户解题活跃数据
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <returns>从当年1月1日至当天的每日解题数据。</returns>
         public async Task<StatisticsActive?> GetStatisticsActiveAsync(Session session, int uid)
@@ -43,7 +41,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户解题曲线
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <returns>分类返回用户解题时间时间戳数据。</returns>
         public async Task<List<StatisticsSolves>?> GetStatisticsSolvesAsync(Session session, int uid)
@@ -60,7 +57,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户积分曲线
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <returns>返回用户参加的每场比赛排名以及积分变动数据。</returns>
         public async Task<List<StatisticsRating>?> GetStatisticsRatingAsync(Session session, int uid)
@@ -76,7 +72,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户能力雷达图数据
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <returns>返回一个列表，包含用户各方向解题数据，其中一共六项，分别代表WEB、PWN、REVERSE、CRYPTO、MISC、OTHER方向解题数据，每项数据都为[解题数, 总题数]的列表</returns>
         public async Task<StatisticsRadar?> GetStatisticsRadarAsync(Session session, int uid)
@@ -91,7 +86,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户文章列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
@@ -104,7 +98,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户关注列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
@@ -122,7 +115,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取用户粉丝列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="uid">用户UID</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
@@ -140,7 +132,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取图床使用情况
         /// </summary>
-        /// <param name="session">会话</param>
         /// <returns>返回图床使用情况。</returns>
         public static async Task<PictureBedUsed> GetPictureBedUsedAsync(Session session)
         {
@@ -150,7 +141,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取图床列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回指定页的图床列表数据，数据按照id排降序。</returns>
@@ -163,7 +153,6 @@ namespace Balderich.Api
         /// <summary>
         /// 图床上传图片
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="imagePath">图片路径</param>
         /// <returns>上传成功返回图片信息，否则返回null。</returns>
         public static async Task<PictureBedUploadResponse?> UploadToPictureBedAsync(Session session, string imagePath)
@@ -180,7 +169,6 @@ namespace Balderich.Api
         /// <summary>
         /// 图床下载图片
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="pid">图片ID</param>
         /// <param name="savePath">图片保存路径，文件名从响应头中读取</param>
         /// <returns>成功返回true，失败抛出异常</returns>

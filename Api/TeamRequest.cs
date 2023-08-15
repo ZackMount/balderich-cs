@@ -18,7 +18,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">战队列表</param>
         /// <param name="size">每页大小</param>
         /// <returns>战队列表</returns>
@@ -30,7 +29,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队详细信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="tid">团队ID</param>
         /// <returns>战队详细信息</returns>
         public async Task<Info?> GetInfoAsync(int tid)
@@ -41,7 +39,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队通知信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <returns>战队通知信息</returns>
         public async Task<string> GetNoticeAsync()
         {
@@ -51,7 +48,6 @@ namespace Balderich.Api
         /// <summary>
         /// 战队每日打卡
         /// </summary>
-        /// <param name="session">会话</param>
         /// <returns>打卡信息</returns>
         public async Task<ClockIn> ClockinAsync()
         {
@@ -61,7 +57,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队题目列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>战队题目列表</returns>
@@ -73,7 +68,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队题目详细信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="pid">题目ID</param>
         /// <returns>战队题目详细信息</returns>
         public static async Task<ProblemInfo> GetProblemInfoAsync(Session session, int pid)
@@ -84,7 +78,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队比赛列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">会话</param>
         /// <returns>其中state的值从[0-2]，分别代表未开始、进行中和已结束。</returns>
@@ -96,7 +89,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队比赛详细信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="cid">比赛ID</param>
         /// <returns>
         /// <br>其中level分别为[0-4]代表个人公开赛、个人密码赛、团队公开赛和团队密码赛。</br>
@@ -111,7 +103,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队比赛排行榜数据
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="cid">比赛ID</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
@@ -130,7 +121,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队成员列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回内容中role为用户角色，其中[0,1,2]分别代表[成员，管理员，队长]</returns>
@@ -142,7 +132,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队申请列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回战队申请列表</returns>
@@ -154,7 +143,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取战队使用情况
         /// </summary>
-        /// <param name="session">会话</param>
         /// <returns>返回战队使用情况</returns>
         public async Task<AnalysisUse> GetAnalysisUse()
         {

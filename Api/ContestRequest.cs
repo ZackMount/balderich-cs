@@ -18,7 +18,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取比赛列表
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="page">页数</param>
         /// <param name="type">比赛类型，[0, 1]分别代表[公开赛事, 私密赛事]，默认公开赛事</param>
         /// <returns>比赛列表</returns>
@@ -30,7 +29,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取比赛详细信息
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="cid">比赛ID</param>
         /// <returns>比赛详细信息</returns>
         public async Task<Info>? GetInfoAsync(int cid)
@@ -41,7 +39,6 @@ namespace Balderich.Api
         /// <summary>
         /// 获取比赛排行榜数据
         /// </summary>
-        /// <param name="session">会话</param>
         /// <param name="cid">比赛ID</param>
         /// <param name="page">页数</param>
         /// <returns>
