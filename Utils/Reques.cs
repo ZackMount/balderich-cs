@@ -6,7 +6,7 @@ namespace Balderich.Utils
 {
     public class Request
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new();
         private const string BaseUrl = "https://www.nssctf.cn/v2/api";
 
         public static async Task<ApiMessageResult> GetAsync(Session session, string path)

@@ -38,6 +38,4 @@ namespace Balderich.Models.Team
         [JsonProperty("date")] 
         public long Date { get; set; }
     }
-
-
 }

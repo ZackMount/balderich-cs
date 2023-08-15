@@ -11,7 +11,7 @@ namespace Balderich.Models.Contest
         /// 比赛列表
         /// </summary>
         [JsonProperty("contests")]
-        public List<Info> Contests { get; set; }
+        public List<Info>? Contests { get; set; }
         /// <summary>
         /// 比赛总数
         /// </summary>

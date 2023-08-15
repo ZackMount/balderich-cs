@@ -21,8 +21,7 @@ namespace Balderich.Utils
         /// <returns></returns>
         private static string EncryptBySHA256(string text)
         {
-            var md5 = SHA256.Create();
-            var bs = md5.ComputeHash(Encoding.UTF8.GetBytes(text));
+            var bs = SHA256.HashData(Encoding.UTF8.GetBytes(text));
             var sb = new StringBuilder();
             foreach (byte b in bs)
             {

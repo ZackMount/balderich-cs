@@ -17,27 +17,26 @@
 - 引入包
 
   ```c#
-  using Balderich.Api;
-  using Balderich.Utils;
+  using Balderich;
   ```
-
-- 创建Session
+  
+- 创建Client
 
   ```c#
-  Session session = new("your_key", "your_secret", DateTime.Now);
+  Client client = new("your_key", "your_secret", DateTime.Now);
   ```
 
 - 根据不同模块发送Api请求
 
   ```c#
   //用户模块:获取用户个人信息
-  var userInfo = User.GetInfoAsync(session, "Xenny");
+  var userInfo = client.User.GetInfoAsync("Xenny");
   //题目模块:获取题单题目列表
-  var problemInfo = Problem.GetSheetProblemListAsync(session, 1, 1, 10);
+  var problemInfo = client.Problem.GetSheetProblemListAsync(1, 1, 10);
   //比赛模块:获取比赛排行榜数据
-  var contestRankList = Contest.GetRankListAsync(session, 1, 10);
+  var contestRankList = client.Contest.GetRankListAsync(1, 10);
   //战队模块:获取战队申请列表
-  var teamApplyList = Team.GetUserApplyListAsync(session, 1, 10);
+  var teamApplyList = client.Team.GetUserApplyListAsync(1, 10);
   ```
 
 ### 异常处理
@@ -48,4 +47,6 @@
 
 ## 特别鸣谢
 
-Xenny
+[Xenny](https://github.com/X3NNY)
+
+[Nyr4ki](https://github.com/Nyr4ki)

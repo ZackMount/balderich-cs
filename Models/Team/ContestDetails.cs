@@ -26,7 +26,7 @@ namespace Balderich.Models.Team
         /// 比赛模式
         /// </summary>
         [JsonProperty("Mode")] 
-        public int mode { get; set; }
+        public int Mode { get; set; }
         /// <summary>
         /// 比赛简介
         /// </summary>

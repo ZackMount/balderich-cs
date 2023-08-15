@@ -49,27 +49,27 @@ namespace Balderich.Models.Contest
             Total = data.Total;
             foreach (var item in data.Problems)
             {
-                Problem problem = new();
-                problem.Id = (int)item[0];
-                problem.Count = (int)item[1];
-                problem.Title = (string)item[2];
-                Problems.Add(problem);
+                Problem problem = new()
+                {
+                    Id = (int)item[0],
+                    Count = (int)item[1],
+                    Title = (string)item[2]
+                };
+                Problems?.Add(problem);
             }
             foreach (var item in data.Solves)
             {
-                Solve s = new();
-                s.Id = item.Id;
-                s.Rating = item.Rating;
-                s.Score = item.Score;
-                s.Username = item.Username;
-                s.SolvedId = item.SolvedId.Split('|').ToList();
-                s.SolvedTime = item.SolvedTime.Split('|').ToList();
-                Solves.Add(s);
+                Solve s = new()
+                {
+                    Id = item.Id,
+                    Rating = item.Rating,
+                    Score = item.Score,
+                    Username = item.Username,
+                    SolvedId = item?.SolvedId?.Split('|').ToList(),
+                    SolvedTime = item?.SolvedTime?.Split('|').ToList()
+                };
+                Solves?.Add(s);
             }
-        }
-        public RankList()
-        {
-
         }
     }
 }

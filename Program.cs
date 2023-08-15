@@ -1,8 +1,8 @@
-﻿using Balderich.Api;
-using Balderich.Models.User;
-using Balderich.Utils;
-using Newtonsoft.Json;
+﻿using Balderich;
 
-Session session = new("your_key", "your_secret", DateTime.Now);
+//Usage here.
+Client client = new("your_key", "your_secret", DateTime.Now);
 
-var info = User.GetInfoAsync(session, "Xenny").Result; //user info here.
+var userInfo = client.User.GetInfoAsync("Xenny").Result;
+Console.WriteLine(userInfo?.Bio);
+Console.WriteLine(userInfo?.Email);
