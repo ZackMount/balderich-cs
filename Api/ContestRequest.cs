@@ -1,14 +1,13 @@
 ﻿using Balderich.Models.Contest;
 using Balderich.Utils;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Balderich.Api
 {
     /// <summary>
     /// 比赛模块
     /// </summary>
-    public class Contest
+    public partial class Contest
     {
         public Contest(Session session) 
         {

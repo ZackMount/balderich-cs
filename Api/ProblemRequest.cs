@@ -7,7 +7,7 @@ namespace Balderich.Api
     /// <summary>
     /// 题目模块
     /// </summary>
-    public class Problem
+    public partial class Problem
     {
         public Problem(Session session)
         {

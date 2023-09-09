@@ -3,31 +3,43 @@ using System.Text;
 
 namespace Balderich.Utils
 { 
-    public static class Signature
+    public class Signature
     {
+        /// <summary>
+        /// 请求路径
+        /// </summary>
+        public string Path { get; set; }
+        /// <summary>
+        /// 请求Key
+        /// </summary>
+        public string Key { get; set; }
+        /// <summary>
+        /// 请求时间
+        /// </summary>
+        public long SignTime { get; set; }
+        /// <summary>
+        /// 请求Secret
+        /// </summary>
+        public string Secret { get; set; }
+        public Signature(string Path, string Key, long Datatime, string Secret)
+        {
+            this.Path = Path;
+            this.Key = Key;
+            this.Secret = Secret; 
+            this.SignTime = Datatime;
+        }
         /// <summary>
         /// 签名计算
         /// </summary>
-        /// <param name="signatureClass"></param>
         /// <returns></returns>
-        public static string Calculator(SignatureClass signatureClass)
+        public string Calculator()
         {
-            return EncryptBySHA256($"/v2/api/{signatureClass.Path}#{signatureClass.Key}#{signatureClass.SignTime}#{signatureClass.Secret}");
+            return EncryptBySHA256($"/v2/api/{Path}#{Key}#{SignTime}#{Secret}");
         }
-        /// <summary>
-        /// SHA256加密
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private static string EncryptBySHA256(string text)
+        private string EncryptBySHA256(string text)
         {
             var bs = SHA256.HashData(Encoding.UTF8.GetBytes(text));
-            var sb = new StringBuilder();
-            foreach (byte b in bs)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-            return sb.ToString();
+            return BitConverter.ToString(bs).Replace("-", "").ToLower();
         }
     }
 }

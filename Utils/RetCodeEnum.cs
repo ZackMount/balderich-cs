@@ -3,31 +3,31 @@
     public enum RetCode
     {
         /// <summary>
-        /// 成功
+        /// 认证正常，返回数据
         /// </summary>
         SUCCESS = 10000,
         /// <summary>
-        /// 无授权
+        /// 认证字段为空或缺失
         /// </summary>
         AUTH_NONE = 10001,
         /// <summary>
-        /// 授权不存在
+        /// 不存在的API Key
         /// </summary>
         AUTH_NOT_EXIST = 10002,
         /// <summary>
-        /// 授权签名错误
+        /// 认证签名错误
         /// </summary>
         AUTH_ERROR_SIGN = 10003,
         /// <summary>
-        /// 授权超时
+        /// 该请求已过期（time超时）
         /// </summary>
         AUTH_TIMEOUT = 10004,
         /// <summary>
-        /// 授权计算错误
+        /// 签名计算异常
         /// </summary>
         AUTH_CALC_ERROR = 10005,
         /// <summary>
-        /// 请求过快
+        /// 签名计算异常
         /// </summary>
         AUTH_REQUEST_FAST = 10006,
         /// <summary>
@@ -39,27 +39,27 @@
         /// </summary>
         USER_NOT_EXIST = 11001,
         /// <summary>
-        /// 用户关闭了关注
+        /// 用户未开放关注列表
         /// </summary>
         USER_CLOSE_FOLLOW = 11002,
         /// <summary>
-        /// 用户图片不存在
+        /// 上传图片为空
         /// </summary>
         USER_IMAGE_NONE = 11003,
         /// <summary>
-        /// 用户图片格式错误
+        /// 上传图片格式不为PNG、JPEG或GIF
         /// </summary>
         USER_IMAGE_FORMAT_ERROR = 11004,
         /// <summary>
-        /// 用户图片打开错误
+        /// 上传图片解析错误
         /// </summary>
         USER_IMAGE_OPEN_ERROR = 11005,
         /// <summary>
-        /// 用户内存不足
+        /// 用户可用空间不足
         /// </summary>
         USER_MEMORY_NOT_ENOUGH = 11006,
         /// <summary>
-        /// 用户图片不存在
+        /// 图床图片不存在或非当前用户上传
         /// </summary>
         USER_IMAGE_NOT_EXIST = 11007,
         /// <summary>
@@ -67,15 +67,15 @@
         /// </summary>
         PROBLEM_NOT_EXIST = 12001,
         /// <summary>
-        /// 题目权限被拒绝
+        /// 题目无权访问
         /// </summary>
         PROBLEM_PEMISSION_DENIED = 12002,
         /// <summary>
-        /// 题目单不存在
+        /// 题单不存在
         /// </summary>
         PROBLEM_SHEET_NOT_EXIST = 12101,
         /// <summary>
-        /// 题目单权限被拒绝
+        /// 题单无权访问
         /// </summary>
         PROBLEM_SHEET_PEMISSION_DENIED = 12102,
         /// <summary>
@@ -83,39 +83,39 @@
         /// </summary>
         CONTEST_NOT_EXIST = 13001,
         /// <summary>
-        /// 比赛权限被拒绝
+        /// 比赛无权访问
         /// </summary>
         CONTEST_PERMISSION_DENIED = 13002,
         /// <summary>
-        /// 团队不存在
+        /// 战队不存在
         /// </summary>
         TEAM_NOT_EXIST = 14001,
         /// <summary>
-        /// 团队权限被拒绝
+        /// 战队无权访问
         /// </summary>
         TEAM_PERMISSION_DENIED = 14002,
         /// <summary>
-        /// 团队无成员
+        /// 未加入任何战队
         /// </summary>
         TEAM_NO_MEMBER = 14003,
         /// <summary>
-        /// 团队方法权限被拒绝
+        /// 无权访问此功能
         /// </summary>
         TEAM_METHOD_PERMISSION_DENIED = 14004,
         /// <summary>
-        /// 团队题目不存在
+        /// 战队题目不存在
         /// </summary>
         TEAM_PROBLEM_NOT_EXIST = 14101,
         /// <summary>
-        /// 团队题目权限被拒绝
+        /// 战队题目无权访问
         /// </summary>
         TEAM_PROBELM_PERMISSION_DENIED = 14102,
         /// <summary>
-        /// 团队比赛不存在
+        /// 战队比赛不存在
         /// </summary>
         TEAM_CONTEST_NOT_EXIST = 14201,
         /// <summary>
-        /// 团队比赛权限被拒绝
+        /// 战队比赛无权访问
         /// </summary>
         TEAM_CONTEST_PERMISSION_DENIED = 142020 
     }

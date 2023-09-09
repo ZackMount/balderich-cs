@@ -2,8 +2,6 @@
 using Balderich.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Net.Mime;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Balderich.Api
@@ -153,7 +151,7 @@ namespace Balderich.Api
         /// <summary>
         /// 图床上传图片
         /// </summary>
-        /// <param name="imagePath">图片路径</param>
+        /// <param name="imagePath">图片文件路径</param>
         /// <returns>上传成功返回图片信息，否则返回null。</returns>
         public static async Task<PictureBedUploadResponse?> UploadToPictureBedAsync(Session session, string imagePath)
         {
@@ -175,11 +173,11 @@ namespace Balderich.Api
         public static async Task<bool> DownloadPictureAsync(Session session, int pid, string savePath)
         {
             var path = $"user/picturebed/{pid}/download/";
-            var signatureClass = new SignatureClass($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
-            var signature = Signature.Calculator(signatureClass);
-            var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
+            var signature = new Signature($"/v2/api/{path}", session.Key, DateTimeUtil.DateTimeToTimeStamp(DateTime.Now), session.Secret);
+            var postUrl = $"https://www.nssctf.cn/v2/api/{path}?key={session.Key}&time={signature.SignTime}&sign={signature.Calculator()}";
 
             using HttpClient client = new();
+
             HttpResponseMessage response = await client.PostAsync(postUrl, null);
 
             if (!response.IsSuccessStatusCode)
@@ -201,7 +199,7 @@ namespace Balderich.Api
 
             string fileName = match.Groups[1].Value;
             string filePath = Path.Combine(savePath, fileName);
-            byte[]? imageData = await response?.Content?.ReadAsByteArrayAsync();
+            byte[]? imageData = response?.Content?.ReadAsByteArrayAsync().Result;
 
             File.WriteAllBytes(filePath, imageData);
             return true;

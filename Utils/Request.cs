@@ -8,21 +8,16 @@ namespace Balderich.Utils
     {
         private static readonly HttpClient client = new();
         private const string BaseUrl = "https://www.nssctf.cn/v2/api";
-
         public static async Task<ApiMessageResult> GetAsync(Session session, string path)
             => await SendRequestAsync(session, path, HttpMethod.Get);
-
         public static async Task<ApiMessageResult> PostAsync(Session session, string path, HttpContent? content)
             => await SendRequestAsync(session, path, HttpMethod.Post, content);
-
         public static async Task<ApiMessageResult> PutAsync(Session session, string path, HttpContent? content)
             => await SendRequestAsync(session, path, HttpMethod.Put, content);
-
         private static async Task<ApiMessageResult> SendRequestAsync(Session session, string path, HttpMethod method, HttpContent? content = null)
         {
-            var signatureClass = new SignatureClass(path, session.Key, DateTimeUtil.DateTimeToTimeStamp(session.DateTime), session.Secret);
-            var signature = Signature.Calculator(signatureClass);
-            var url = $"{BaseUrl}/{path}?key={session.Key}&time={signatureClass.SignTime}&sign={signature}";
+            var signature = new Signature(path, session.Key, DateTimeUtil.DateTimeToTimeStamp(session.DateTime), session.Secret);
+            var url = $"{BaseUrl}/{path}?key={session.Key}&time={signature.SignTime}&sign={signature.Calculator()}";
 
             var httpResponse = method switch
             {
@@ -38,16 +33,14 @@ namespace Balderich.Utils
             AssertSuccess((RetCode)result.Code);
             return result;
         }
-
         private static void AssertSuccess(RetCode code)
         {
             if (!Enum.IsDefined(typeof(RetCode), code))
                 throw new InvalidEnumArgumentException(nameof(code), (int)code, typeof(RetCode));
 
             if (code != RetCode.SUCCESS)
-                throw new Exception(Enum.GetName(code));
+                throw new Exception($"RetCode:{code.GetHashCode()}({Enum.GetName(code)})");
         }
-
         private static ApiMessageResult Parse(string content)
         {
             var obj = JObject.Parse(content);

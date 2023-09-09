@@ -1,6 +1,7 @@
 ﻿using Balderich.Models.Team;
 using Balderich.Utils;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace Balderich.Api
@@ -8,7 +9,7 @@ namespace Balderich.Api
     /// <summary>
     /// 团队模块
     /// </summary>
-    public class Team
+    public partial class Team
     {
         public Team(Session session) 
         {
@@ -70,7 +71,7 @@ namespace Balderich.Api
         /// </summary>
         /// <param name="pid">题目ID</param>
         /// <returns>战队题目详细信息</returns>
-        public static async Task<ProblemInfo> GetProblemInfoAsync(Session session, int pid)
+        public async Task<ProblemInfo> GetProblemInfoAsync(int pid)
         {
             var apiMessageResult = await Request.GetAsync(session, $"team/problem/{pid}/info/");
             return JsonConvert.DeserializeObject<ProblemInfo>(apiMessageResult?.Data?.ToString());
@@ -116,6 +117,7 @@ namespace Balderich.Api
         {
             //Didn't work...
             var apiMessageResult = await Request.GetAsync(session, $"team/contest/{cid}/rank/list/{page}/{size}/");
+
             return new Models.Contest.RankList(JsonConvert.DeserializeObject<Models.Contest.RankListRaw>(apiMessageResult?.Data?.ToString()));
         }
         /// <summary>
@@ -124,7 +126,7 @@ namespace Balderich.Api
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回内容中role为用户角色，其中[0,1,2]分别代表[成员，管理员，队长]</returns>
-        public static async Task<MemberList>? GetUserListAsync(Session session, int page, int size)
+        public async Task<MemberList>? GetUserListAsync(int page, int size)
         {
             var apiMessageResult = await Request.GetAsync(session, $"team/user/list/{page}/{size}/");
             return JsonConvert.DeserializeObject<MemberList>(apiMessageResult?.Data?.ToString());
@@ -135,7 +137,7 @@ namespace Balderich.Api
         /// <param name="page">页数</param>
         /// <param name="size">每页大小</param>
         /// <returns>返回战队申请列表</returns>
-        public static async Task<ApplyUserList>? GetUserApplyListAsync(Session session, int page, int size)
+        public async Task<ApplyUserList>? GetUserApplyListAsync(int page, int size)
         {
             var apiMessageResult = await Request.GetAsync(session, $"team/user/apply/list/{page}/{size}/");
             return JsonConvert.DeserializeObject<ApplyUserList>(apiMessageResult?.Data?.ToString());
@@ -148,6 +150,45 @@ namespace Balderich.Api
         {
             var apiMessageResult = await Request.GetAsync(session, $"team/analysis/use/");
             return JsonConvert.DeserializeObject<AnalysisUse>(apiMessageResult?.Data?.ToString());
+        }
+        /// <summary>
+        /// 获取战队解题曲线数据
+        /// </summary>
+        /// <param name="uids">成员UID</param>
+        /// <returns>返回成员解题曲线数据</returns>
+        public async Task<List<AnalysisSolvesCurve>> GetAnalysisSolvesCurve(int[] uids)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(new { uids }), Encoding.UTF8, "application/json");
+            var apiMessageResult = await Request.PostAsync(session, $"team/analysis/solves/curve/", content);
+            var solvesCurves = new List<AnalysisSolvesCurve>();
+            foreach (var item in JObject.Parse(apiMessageResult.Data?.ToString()).Properties())
+            {
+                var sc = new AnalysisSolvesCurve
+                {
+                    Uid = int.Parse(item.Name),
+                    Curve = item.Value.ToObject<int[]>()
+                };
+                solvesCurves.Add(sc);
+            }
+            return solvesCurves;
+        }
+        /// <summary>
+        /// 获取战队每日解题数据
+        /// </summary>
+        /// <param name="uids">成员UID</param>
+        /// <returns>返回成员当日内解题数据</returns>
+        public async Task<List<StatisticsDay>> GetStatisticsDay(int[] uids)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(new { uids }), Encoding.UTF8, "application/json");
+            var apiMessageResult = await Request.PostAsync(session, $"team/statistics/day/", content);
+            var statistics = new List<StatisticsDay>();
+            foreach (var item in JObject.Parse(apiMessageResult.Data?.ToString()).Properties())
+            {
+                var sc = item.Value.ToObject<StatisticsDay>();
+                sc.Uid = int.Parse(item.Name);
+                statistics.Add(sc);
+            }
+            return statistics;
         }
     }
 }

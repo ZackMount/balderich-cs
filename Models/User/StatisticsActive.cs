@@ -4,8 +4,14 @@ namespace Balderich.Models.User
 {
     public class StatisticsActiveInput
     {
+        /// <summary>
+        /// 开始时间戳
+        /// </summary>
         [JsonProperty("start_date")]
         public long StartDate { get; set; }
+        /// <summary>
+        /// 结束时间戳
+        /// </summary>
         [JsonProperty("ends_date")]
         public long EndsDate { get; set; }
         [JsonProperty("count")]
